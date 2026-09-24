@@ -3,7 +3,7 @@ from collections import OrderedDict
 from django.conf import settings
 from django.contrib import messages
 from django.core.cache import cache
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.cache import never_cache
@@ -18,7 +18,7 @@ CONTACT_RATE_WINDOW = 60 * 60
 PAGE_CACHE_TTL = 120
 
 
-# ── helpers ───────────────────────────────────────────────────────────────────
+# â”€â”€ helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def _client_ip(request):
     return request.META.get("REMOTE_ADDR") or "unknown"
@@ -52,25 +52,24 @@ def _send_contact_notification(form_data):
         return
     subject = (
         f"[Portfolio] New message from {form_data['name']}"
-        + (f" — {form_data['subject']}" if form_data.get("subject") else "")
+        + (f" â€” {form_data['subject']}" if form_data.get("subject") else "")
     )
     body = (
         f"Name:    {form_data['name']}\n"
         f"Email:   {form_data['email']}\n"
-        f"Phone:   {form_data.get('phone') or '—'}\n"
-        f"Subject: {form_data.get('subject') or '—'}\n"
+        f"Phone:   {form_data.get('phone') or 'â€”'}\n"
+        f"Subject: {form_data.get('subject') or 'â€”'}\n"
         f"\n{form_data['message']}\n"
         f"\n---\nReply directly to this email to respond."
     )
     try:
-        send_mail(
+        EmailMessage(
             subject=subject,
-            message=body,
+            body=body,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[notify_email],
+            to=[notify_email],
             reply_to=[form_data["email"]],
-            fail_silently=True,
-        )
+        ).send(fail_silently=True)
     except Exception:
         pass  # never crash the page over a failed email
 
@@ -107,7 +106,7 @@ def _page_payload():
     return payload
 
 
-# ── views ─────────────────────────────────────────────────────────────────────
+# â”€â”€ views â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @csrf_protect
 @never_cache

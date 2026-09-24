@@ -1291,3 +1291,11 @@ textarea.field-input { resize: vertical; min-height: 130px; }
   [data-reveal] { opacity: 1; transform: none; }
   .float-chip { animation: none; }
 }
+
+/* =========================================================
+   Typography: darken body and muted text for readability
+   ========================================================= */
+:root {
+  --color-body: #1F2937;
+  --color-muted: #374151;
+}
