@@ -9,9 +9,9 @@ I'm a Computer Engineering professional with hands-on experience in software dev
 I enjoy building practical, user-focused applications and continuously improving my technical skills through real-world projects.
 
 🛠️ Tech Stack
-Languages: C, Python, Java, SQL
-Web: HTML, CSS, JavaScript
-Backend: Spring Boot
-Mobile: Flutter
-Database: MySQL, MongoDB
-Tools: Git, GitHub, VS Code
+Languages: C, Python, Java, SQL.
+Web: HTML, CSS, JavaScript.
+Backend: Spring Boot.
+Mobile: Flutter.
+Database: MySQL, MongoDB.
+Tools: Git, GitHub, VS Code.
