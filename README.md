@@ -1,4 +1,4 @@
-Antony Jos — Developer Portfolio
+Antony Jos — Portfolio
 
 Welcome to my personal portfolio website, showcasing my skills, projects, experience, and journey as a Computer Engineer and Developer.
 
