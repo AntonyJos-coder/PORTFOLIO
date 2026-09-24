@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    Design tokens
    ========================================================= */
 :root {
@@ -1286,7 +1286,8 @@ textarea.field-input { resize: vertical; min-height: 130px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  /* Restore cursor: functional indicator, not decorative animation */
+  .typewriter-cursor { animation-duration: 1s !important; display: inline-block; }
   [data-reveal] { opacity: 1; transform: none; }
-  .typewriter-cursor { display: none; }
   .float-chip { animation: none; }
 }

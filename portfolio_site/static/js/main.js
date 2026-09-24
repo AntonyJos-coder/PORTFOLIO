@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var typeEl = document.querySelector(".typewriter");
   var textEl = typeEl ? typeEl.querySelector(".typewriter-text") : null;
   var roles = typeEl
-    ? (typeEl.getAttribute("data-roles") || "Data Analytics, Web Developer, App Developer")
+    ? (typeEl.getAttribute("data-roles") || "Data Analyst,Web Developer,App Developer,Python Developer")
         .split(",")
         .map(function (role) { return role.trim(); })
         .filter(Boolean)
