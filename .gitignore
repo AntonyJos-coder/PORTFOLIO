@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Django
+db.sqlite3
+/portfolio_site/db.sqlite3
+/media/
+/portfolio_site/media/
+/staticfiles/
+/portfolio_site/staticfiles/
+
+# Environment / secrets — NEVER commit these
+.env
+portfolio_site/.env
+*.env
+
+# Virtual environment
+venv/
+portfolio_site/venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel / deployment
+.vercel
+.vercelignore
+
+# Logs
+*.log

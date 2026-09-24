@@ -1,0 +1,21 @@
+# Normalise line endings: store as LF, checkout as-is on all platforms
+* text=auto eol=lf
+*.py text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+*.env.example text eol=lf
+Procfile text eol=lf
+
+# Binaries — do not touch line endings
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.svg text eol=lf

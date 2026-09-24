@@ -1,0 +1,409 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block content %}
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-name">{{ profile.full_name|default:"Antony Jos"|upper }}</span>
+      <span class="brand-role">{{ profile.title|default:"Computer Engineer" }}</span>
+    </a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="{% if profile.resume_file %}{{ profile.resume_file.url }}{% else %}{% static 'resume/Antony_Jos_Resume.pdf' %}{% endif %}" download="Antony_Jos_Resume.pdf" class="btn btn-primary btn-sm">Resume</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+  <div id="top"></div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-label="Introduction">
+    <div class="section-inner hero-inner">
+      <div class="hero-text" data-reveal>
+        <div class="welcome-pill">
+          <span class="welcome-wave" aria-hidden="true">👋</span>
+          <span class="welcome-text">Welcome to my portfolio</span>
+        </div>
+
+        <h1 class="hero-title">
+          Hi, I'm <span class="hero-name-highlight">{{ profile.full_name|default:"Antony Jos" }}</span>
+        </h1>
+
+        <div class="hero-typewriter-line">
+          <span
+            class="typewriter"
+            data-roles="Data Analytics,Web Developer,App Developer"
+            aria-live="polite"
+          >
+            <span class="typewriter-text">Data Analytics</span><span class="typewriter-cursor" aria-hidden="true"></span>
+          </span>
+        </div>
+
+        <div class="hero-desc-group">
+          <p class="hero-desc-lead">A practical Computer Engineer passionate about Python, Web Development, and building smart software solutions that actually solve real-world problems.</p>
+          <p class="hero-desc-sub">I love turning ideas into clean code, practical applications, and data-driven insights.</p>
+        </div>
+
+        <div class="hero-meta-row">
+          <span class="meta-item meta-location">
+            <svg class="meta-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+            </svg>
+            <span>{{ profile.location|default:"Kerala, India" }}</span>
+          </span>
+          <span class="meta-item meta-status">
+            <span class="status-pulse-dot" aria-hidden="true"></span>
+            <span>Available Now</span>
+          </span>
+        </div>
+
+        <div class="hero-cta-row">
+          <a href="#contact" class="btn btn-hire">
+            <span>Hire Me</span>
+            <svg class="btn-arrow" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+          <a href="{% if profile.resume_file %}{{ profile.resume_file.url }}{% else %}{% static 'resume/Antony_Jos_Resume.pdf' %}{% endif %}" download="Antony_Jos_Resume.pdf" class="btn btn-cv" aria-label="Download Antony Jos Resume">
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+            <span>Download Resume</span>
+          </a>
+        </div>
+
+        <div class="hero-social-divider" aria-hidden="true"></div>
+
+        <div class="hero-social-row">
+          <span class="social-label">Follow me:</span>
+          <div class="social-icons">
+            <a href="{{ profile.github_url|default:'https://github.com' }}" {% if profile.github_url %}target="_blank" rel="noopener noreferrer"{% endif %} class="social-icon-btn" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </a>
+            <a href="{{ profile.linkedin_url|default:'https://linkedin.com' }}" {% if profile.linkedin_url %}target="_blank" rel="noopener noreferrer"{% endif %} class="social-icon-btn" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.6a1.65 1.65 0 1 0 0 3.3 1.65 1.65 0 0 0 0-3.3z"/></svg>
+            </a>
+            <a href="{{ profile.instagram_url|default:'https://instagram.com' }}" {% if profile.instagram_url %}target="_blank" rel="noopener noreferrer"{% endif %} class="social-icon-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" data-reveal data-reveal-delay="1">
+        <div class="photo-stage">
+          <div class="photo-ambient-glow" aria-hidden="true"></div>
+          <span class="float-chip float-chip-1" aria-hidden="true">Python</span>
+          <span class="float-chip float-chip-2" aria-hidden="true">Django</span>
+          <span class="float-chip float-chip-3" aria-hidden="true">SQL</span>
+          <span class="float-chip float-chip-4" aria-hidden="true">Flutter</span>
+          <div class="identity-card">
+            {% if profile.profile_image %}
+              <img src="{{ profile.profile_image.url }}" alt="Portrait of {{ profile.full_name }}" class="identity-photo" width="340" height="340" decoding="async" fetchpriority="high">
+            {% else %}
+              <span class="identity-initials" aria-hidden="true">AJ</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="identity-caption">
+          <strong>{{ profile.full_name|default:"Antony Jos" }}</strong>
+          <span>{{ profile.title|default:"Computer Engineer" }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="section">
+    <div class="section-inner about-grid" data-reveal>
+      <div>
+        <p class="eyebrow">About Me</p>
+        <h2>Background &amp; focus</h2>
+        <p class="section-body">{{ profile.about|default:"Add an About Me summary from the admin panel."|linebreaksbr }}</p>
+      </div>
+
+      <div class="about-facts">
+        {% if profile.open_to or profile.open_to_note %}
+        <div class="fact-card">
+          <span class="fact-label">Open to</span>
+          {% if profile.open_to %}<span class="fact-value">{{ profile.open_to }}</span>{% endif %}
+          {% if profile.open_to_note %}<span class="fact-sub">{{ profile.open_to_note }}</span>{% endif %}
+        </div>
+        {% endif %}
+
+        {% if profile.location %}
+        <div class="fact-card">
+          <span class="fact-label">Based in</span>
+          <span class="fact-value">{{ profile.location }}</span>
+        </div>
+        {% endif %}
+
+        {% if profile.learning_focus_list %}
+        <div class="fact-card">
+          <span class="fact-label">Currently exploring</span>
+          <div class="chip-row">
+            {% for focus in profile.learning_focus_list %}
+              <span class="chip chip-muted">{{ focus }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" class="section section-alt">
+    <div class="section-inner">
+      <p class="eyebrow" data-reveal>Skills</p>
+      <h2 data-reveal>Technologies I work with</h2>
+      {% if grouped_skills %}
+        <div class="skills-groups">
+          {% for group in grouped_skills %}
+          <div class="skill-group" data-reveal data-reveal-delay="{{ forloop.counter0 }}">
+            <h3>{{ group.label }}</h3>
+            <div class="chip-row">
+              {% for skill in group.skills %}
+                <span class="chip">{{ skill.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-note">Skills will show up here — add them from the admin panel.</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section id="education" class="section">
+    <div class="section-inner">
+      <p class="eyebrow" data-reveal>Education</p>
+      <h2 data-reveal>Academic background</h2>
+      {% if education %}
+        <ol class="timeline" data-reveal>
+          {% for edu in education %}
+          <li>
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-head">
+                <h3>{{ edu.degree }}</h3>
+                {% if edu.years_label %}<span class="timeline-years">{{ edu.years_label }}</span>{% endif %}
+              </div>
+              <p class="timeline-school">{{ edu.school }}</p>
+              {% if edu.description %}<p class="timeline-desc">{{ edu.description }}</p>{% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p class="empty-note">Education entries will show up here — add them from the admin panel.</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="section section-alt">
+    <div class="section-inner">
+      <p class="eyebrow" data-reveal>Projects</p>
+      <h2 data-reveal>Things I've built</h2>
+
+      {% if featured_project %}
+      <article class="featured-project" data-reveal>
+        <div class="featured-project-media">
+          {% if featured_project.image %}
+            <img src="{{ featured_project.image.url }}" alt="{{ featured_project.title }}" decoding="async" loading="lazy">
+          {% else %}
+            <div class="featured-project-media placeholder" aria-hidden="true"></div>
+          {% endif %}
+        </div>
+        <div class="featured-project-body">
+          <span class="featured-tag">Featured Project</span>
+          <h3>{{ featured_project.title }}</h3>
+          <p>{{ featured_project.description|default:featured_project.summary }}</p>
+          {% if featured_project.tech_list %}
+          <div class="tech-tags">
+            {% for tech in featured_project.tech_list %}<span>{{ tech }}</span>{% endfor %}
+          </div>
+          {% endif %}
+          {% if featured_project.source_url or featured_project.project_url %}
+          <div class="project-links">
+            {% if featured_project.source_url %}
+              <a href="{{ featured_project.source_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Source Code</a>
+            {% endif %}
+            {% if featured_project.project_url %}
+              <a href="{{ featured_project.project_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo</a>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </article>
+      {% endif %}
+
+      {% if other_projects %}
+        <div class="projects-grid">
+          {% for project in other_projects %}
+          <article class="project-card" data-reveal data-reveal-delay="{{ forloop.counter0 }}">
+            {% if project.image %}
+              <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" decoding="async" loading="lazy">
+            {% else %}
+              <div class="project-image placeholder" aria-hidden="true"></div>
+            {% endif %}
+            <div class="project-body">
+              <h3>{{ project.title }}</h3>
+              <p class="project-summary">{{ project.summary }}</p>
+              {% if project.tech_list %}
+              <div class="tech-tags">
+                {% for tech in project.tech_list %}<span>{{ tech }}</span>{% endfor %}
+              </div>
+              {% endif %}
+              <div class="project-links">
+                {% if project.project_url %}<a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer">Live demo</a>{% endif %}
+                {% if project.source_url %}<a href="{{ project.source_url }}" target="_blank" rel="noopener noreferrer">Source</a>{% endif %}
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      {% elif not featured_project %}
+        <p class="empty-note">Projects will show up here — add them from the admin panel.</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience" class="section">
+    <div class="section-inner">
+      <p class="eyebrow" data-reveal>Experience</p>
+      <h2 data-reveal>Internships &amp; training</h2>
+      {% if experience %}
+        <ol class="timeline" data-reveal>
+          {% for exp in experience %}
+          <li>
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-head">
+                <h3>{{ exp.display_role }}</h3>
+                <span class="timeline-years">{{ exp.date_label }}</span>
+              </div>
+              <p class="timeline-school">{{ exp.organization }}</p>
+              {% if exp.description %}
+                <p class="timeline-desc">{{ exp.description }}</p>
+              {% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p class="empty-note">Internship / training entries will show up here — add them from the admin panel.</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="section section-alt">
+    <div class="section-inner contact-grid">
+      <div data-reveal>
+        <p class="eyebrow">Contact</p>
+        <h2>Let's Connect</h2>
+        <p class="section-body">Interested in working together or discussing an opportunity? Send a message with the form.</p>
+
+        <ul class="contact-list">
+          {% if profile.email %}
+            <li><span class="fact-label">Email</span><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></li>
+          {% endif %}
+          {% if profile.linkedin_url %}
+            <li><span class="fact-label">LinkedIn</span><a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">{{ profile.linkedin_url }}</a></li>
+          {% endif %}
+          {% if profile.github_url %}
+            <li><span class="fact-label">GitHub</span><a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer">{{ profile.github_url }}</a></li>
+          {% endif %}
+          {% if profile.resume_file %}
+          <li>
+            <span class="fact-label">Resume</span>
+            <a href="{{ profile.resume_file.url }}" target="_blank" rel="noopener noreferrer">Download PDF</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div data-reveal data-reveal-delay="1">
+        {% if messages %}
+          {% for message in messages %}
+            <p class="form-alert {% if message.tags %}{{ message.tags }}{% endif %}" role="status">{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+
+        <form method="post" class="contact-form" novalidate>
+          {% csrf_token %}
+          <div class="hp-wrap" aria-hidden="true">
+            <label for="{{ form.website.id_for_label }}">Website</label>
+            {{ form.website }}
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="{{ form.name.id_for_label }}">Name</label>
+              {{ form.name }}
+              {% for error in form.name.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="field">
+              <label for="{{ form.email.id_for_label }}">Email</label>
+              {{ form.email }}
+              {% for error in form.email.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+            </div>
+          </div>
+          <div class="field">
+            <label for="{{ form.subject.id_for_label }}">Subject</label>
+            {{ form.subject }}
+            {% for error in form.subject.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+          </div>
+          <div class="field">
+            <label for="{{ form.phone.id_for_label }}">Phone <span class="fact-label">(optional)</span></label>
+            {{ form.phone }}
+            {% for error in form.phone.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+          </div>
+          <div class="field">
+            <label for="{{ form.message.id_for_label }}">Message</label>
+            {{ form.message }}
+            {% for error in form.message.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="section-inner footer-inner">
+      <div>
+        <strong>{{ profile.full_name|default:"Antony Jos" }}</strong>
+        <span>{{ profile.title|default:"Computer Engineer" }}</span>
+      </div>
+      <p class="footer-note">{{ profile.footer_note|default:"Built with Django, HTML, CSS and JavaScript." }}</p>
+      <div class="footer-links">
+        {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>{% endif %}
+        {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>{% endif %}
+        {% if profile.email %}<a href="mailto:{{ profile.email }}">Email</a>{% endif %}
+      </div>
+      <span class="footer-copyright">© {% now "Y" %} {{ profile.full_name|default:"Antony Jos" }}</span>
+    </div>
+  </footer>
+</main>
+{% endblock %}

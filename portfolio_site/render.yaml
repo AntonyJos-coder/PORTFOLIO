@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: antony-jos-portfolio
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn portfolio_site.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60 --log-level info
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_SSL_REQUIRE
+        value: "True"
+      - key: SECURE_SSL_REDIRECT
+        value: "True"
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: CONTACT_NOTIFY_EMAIL
+        sync: false
