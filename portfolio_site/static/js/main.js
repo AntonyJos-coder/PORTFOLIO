@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     : [];
 
   function typeLoop() {
-    if (document.hidden || !textEl || prefersReducedMotion || roles.length === 0) return;
+    if (document.hidden || !textEl || roles.length === 0) return;
     var currentRole = roles[typeLoop.roleIndex];
     if (typeLoop.deleting) {
       typeLoop.charIndex--;
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
   typeLoop.charIndex = roles[0] ? roles[0].length : 0;
   typeLoop.deleting = true;
 
-  if (textEl && roles.length && !prefersReducedMotion) {
+  if (textEl && roles.length) {
     typeTimer = window.setTimeout(typeLoop, 1100);
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
