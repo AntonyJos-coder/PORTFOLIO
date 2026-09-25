@@ -243,7 +243,6 @@ if _USE_SUPABASE_STORAGE:
 
 if _USE_SUPABASE_STORAGE:
     from boto3.s3.transfer import TransferConfig as _TransferConfig
-    from botocore.config import Config as _BotoConfig
 
     STORAGES = {
         "default": {
@@ -263,11 +262,6 @@ if _USE_SUPABASE_STORAGE:
                     multipart_threshold=5 * 1024 * 1024 * 1024,
                     multipart_chunksize=5 * 1024 * 1024 * 1024,
                     use_threads=False,
-                ),
-                # Supabase S3 rejects x-amz-checksum-* headers.
-                "config": _BotoConfig(
-                    request_checksum_calculation="when_required",
-                    response_checksum_validation="when_required",
                 ),
             },
         },
