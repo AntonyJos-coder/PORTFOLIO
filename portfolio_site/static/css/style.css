@@ -607,25 +607,12 @@ textarea:focus-visible {
   z-index: 1;
 }
 
-.identity-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 24px;
-  pointer-events: none;
-}
-
-.identity-initials {
-  font-size: 4rem;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: 0.02em;
-}
-
 .identity-photo {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
   max-width: none;
@@ -634,6 +621,23 @@ textarea:focus-visible {
   object-position: center 20%;
   transition: transform 0.4s var(--ease);
   display: block;
+}
+
+.identity-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 24px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.identity-initials {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.02em;
 }
 
 .identity-card:hover .identity-photo {
