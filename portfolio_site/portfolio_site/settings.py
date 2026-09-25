@@ -234,26 +234,29 @@ _sb_region = os.environ.get("SUPABASE_REGION", "ap-southeast-2")
 # Dedicated S3 credentials — generated from Supabase Dashboard → Storage → S3 Access Keys
 _sb_s3_access_key = os.environ.get("SUPABASE_S3_ACCESS_KEY", "")
 _sb_s3_secret_key = os.environ.get("SUPABASE_S3_SECRET_KEY", "")
+_sb_s3_endpoint   = os.environ.get("SUPABASE_S3_ENDPOINT", "").strip()
 
 _USE_SUPABASE_STORAGE = bool(_sb_url and _sb_s3_access_key and _sb_s3_secret_key and _sb_bucket)
 
 if _USE_SUPABASE_STORAGE:
-    _sb_project_ref = _sb_url.replace("https://", "").split(".")[0]
-    AWS_ACCESS_KEY_ID       = _sb_s3_access_key          # dedicated S3 access key
-    AWS_SECRET_ACCESS_KEY   = _sb_s3_secret_key          # dedicated S3 secret key
-    AWS_STORAGE_BUCKET_NAME = _sb_bucket
-    AWS_S3_REGION_NAME      = _sb_region
-    AWS_S3_ENDPOINT_URL     = f"{_sb_url}/storage/v1/s3"
-    AWS_S3_FILE_OVERWRITE   = False
-    AWS_DEFAULT_ACL         = "public-read"
-    AWS_QUERYSTRING_AUTH    = False
-    AWS_S3_CUSTOM_DOMAIN    = None
     MEDIA_URL = f"{_sb_url}/storage/v1/object/public/{_sb_bucket}/"
 
 if _USE_SUPABASE_STORAGE:
     # Supabase vars present — use S3 backend always, even in local dev
     STORAGES = {
-        "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
+        "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
+                "access_key":      _sb_s3_access_key,
+                "secret_key":      _sb_s3_secret_key,
+                "bucket_name":     _sb_bucket,
+                "endpoint_url":    _sb_s3_endpoint,
+                "region_name":     _sb_region,
+                "addressing_style": "path",
+                "querystring_auth": False,
+                "file_overwrite":  False,
+            },
+        },
         "staticfiles": {
             "BACKEND": (
                 "whitenoise.storage.CompressedStaticFilesStorage"
