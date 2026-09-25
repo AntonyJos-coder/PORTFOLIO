@@ -242,26 +242,28 @@ if _USE_SUPABASE_STORAGE:
     MEDIA_URL = f"{_sb_url}/storage/v1/object/public/{_sb_bucket}/"
 
 if _USE_SUPABASE_STORAGE:
+    # Supabase S3 does not support multipart uploads or checksum headers.
+    # Force every upload to use a single PutObject call.
+    from boto3.s3.transfer import TransferConfig as _TransferConfig
+    AWS_S3_TRANSFER_CONFIG = _TransferConfig(
+        multipart_threshold=5 * 1024 * 1024 * 1024,  # 5 GB — effectively disabled
+        multipart_chunksize=5 * 1024 * 1024 * 1024,
+        use_threads=False,
+    )
+
     # Supabase vars present — use S3 backend always, even in local dev
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3.S3Storage",
             "OPTIONS": {
-                "access_key":        _sb_s3_access_key,
-                "secret_key":        _sb_s3_secret_key,
-                "bucket_name":       _sb_bucket,
-                "endpoint_url":      _sb_s3_endpoint,
-                "region_name":       _sb_region,
-                "addressing_style":  "path",
-                "querystring_auth":  False,
-                "file_overwrite":    True,
-                # Supabase S3 does not support multipart or checksum headers.
-                # Force single-part PUT by setting a 5 GB threshold.
-                "transfer_config": {
-                    "multipart_threshold":    5 * 1024 * 1024 * 1024,
-                    "multipart_chunksize":    5 * 1024 * 1024 * 1024,
-                    "use_threads":            False,
-                },
+                "access_key":       _sb_s3_access_key,
+                "secret_key":       _sb_s3_secret_key,
+                "bucket_name":      _sb_bucket,
+                "endpoint_url":     _sb_s3_endpoint,
+                "region_name":      _sb_region,
+                "addressing_style": "path",
+                "querystring_auth": False,
+                "file_overwrite":   True,
             },
         },
         "staticfiles": {
