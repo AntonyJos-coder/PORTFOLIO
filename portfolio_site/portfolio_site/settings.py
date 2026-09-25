@@ -254,7 +254,7 @@ if _USE_SUPABASE_STORAGE:
                 "region_name":     _sb_region,
                 "addressing_style": "path",
                 "querystring_auth": False,
-                "file_overwrite":  False,
+                "file_overwrite":  True,
             },
         },
         "staticfiles": {
