@@ -368,7 +368,7 @@ LOGGING = {
     "loggers": {
         "botocore": {
             "handlers": ["console"],
-            "level": "DEBUG" if _USE_SUPABASE_STORAGE else "INFO",
+            "level": "WARNING",
             "propagate": False,
         },
     },
