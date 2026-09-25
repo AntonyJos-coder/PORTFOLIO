@@ -247,14 +247,21 @@ if _USE_SUPABASE_STORAGE:
         "default": {
             "BACKEND": "storages.backends.s3.S3Storage",
             "OPTIONS": {
-                "access_key":      _sb_s3_access_key,
-                "secret_key":      _sb_s3_secret_key,
-                "bucket_name":     _sb_bucket,
-                "endpoint_url":    _sb_s3_endpoint,
-                "region_name":     _sb_region,
-                "addressing_style": "path",
-                "querystring_auth": False,
-                "file_overwrite":  True,
+                "access_key":        _sb_s3_access_key,
+                "secret_key":        _sb_s3_secret_key,
+                "bucket_name":       _sb_bucket,
+                "endpoint_url":      _sb_s3_endpoint,
+                "region_name":       _sb_region,
+                "addressing_style":  "path",
+                "querystring_auth":  False,
+                "file_overwrite":    True,
+                # Supabase S3 does not support multipart or checksum headers.
+                # Force single-part PUT by setting a 5 GB threshold.
+                "transfer_config": {
+                    "multipart_threshold":    5 * 1024 * 1024 * 1024,
+                    "multipart_chunksize":    5 * 1024 * 1024 * 1024,
+                    "use_threads":            False,
+                },
             },
         },
         "staticfiles": {
