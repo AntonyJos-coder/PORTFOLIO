@@ -258,6 +258,9 @@ if _USE_SUPABASE_STORAGE:
                 "querystring_auth": False,
                 "file_overwrite":   True,
                 "default_acl":      None,            # Supabase S3 rejects ACL headers
+                # Public URL base — S3Storage uses this for .url() instead of endpoint_url.
+                # Supabase public CDN path: /storage/v1/object/public/<bucket>/<key>
+                "custom_domain":    f"{_sb_url.replace('https://', '')}/storage/v1/object/public/{_sb_bucket}",
                 # Must be a real TransferConfig object, not a dict.
                 # Supabase S3 rejects multipart — force single PutObject.
                 "transfer_config": _TransferConfig(
