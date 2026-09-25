@@ -35,7 +35,7 @@
   <!-- ============ HERO ============ -->
   <section class="hero" aria-label="Introduction">
     <div class="section-inner hero-inner">
-      <div class="hero-text">
+      <div class="hero-text" data-reveal>
         <div class="welcome-pill" data-reveal>
           <span class="welcome-wave" aria-hidden="true">👋</span>
           <span class="welcome-text">Welcome to my portfolio</span>
@@ -45,22 +45,22 @@
           Hi, I'm <span class="hero-name-highlight">{{ profile.full_name|default:"Antony Jos" }}</span>
         </h1>
 
-        <div class="hero-typewriter-line" data-reveal data-reveal-delay="2">
+        <div class="hero-typewriter-line">
           <span
             class="typewriter"
-            data-roles="Data Analyst,Web Developer,App Developer,Python Developer"
+            data-roles="Data Analytics,Web Developer,App Developer"
             aria-live="polite"
           >
-            <span class="typewriter-text">Data Analyst</span><span class="typewriter-cursor" aria-hidden="true"></span>
+            <span class="typewriter-text">Data Analytics</span><span class="typewriter-cursor" aria-hidden="true"></span>
           </span>
         </div>
 
-        <div class="hero-desc-group" data-reveal data-reveal-delay="3">
+        <div class="hero-desc-group">
           <p class="hero-desc-lead">A practical Computer Engineer passionate about Python, Web Development, and building smart software solutions that actually solve real-world problems.</p>
           <p class="hero-desc-sub">I love turning ideas into clean code, practical applications, and data-driven insights.</p>
         </div>
 
-        <div class="hero-meta-row" data-reveal data-reveal-delay="4">
+        <div class="hero-meta-row">
           <span class="meta-item meta-location">
             <svg class="meta-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
@@ -73,7 +73,7 @@
           </span>
         </div>
 
-        <div class="hero-cta-row" data-reveal data-reveal-delay="5">
+        <div class="hero-cta-row">
           <a href="#contact" class="btn btn-hire">
             <span>Hire Me</span>
             <svg class="btn-arrow" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -90,7 +90,7 @@
 
         <div class="hero-social-divider" aria-hidden="true"></div>
 
-        <div class="hero-social-row" data-reveal data-reveal-delay="6">
+        <div class="hero-social-row">
           <span class="social-label">Follow me:</span>
           <div class="social-icons">
             <a href="{{ profile.github_url|default:'https://github.com' }}" {% if profile.github_url %}target="_blank" rel="noopener noreferrer"{% endif %} class="social-icon-btn" aria-label="GitHub">
@@ -131,16 +131,16 @@
 
   <!-- ============ ABOUT ============ -->
   <section id="about" class="section">
-    <div class="section-inner about-grid">
+    <div class="section-inner about-grid" data-reveal>
       <div>
-        <p class="eyebrow" data-reveal>About Me</p>
-        <h2 data-reveal data-reveal-delay="1">Background &amp; focus</h2>
-        <p class="section-body" data-reveal data-reveal-delay="2">{{ profile.about|default:"Add an About Me summary from the admin panel."|linebreaksbr }}</p>
+        <p class="eyebrow">About Me</p>
+        <h2>Background &amp; focus</h2>
+        <p class="section-body">{{ profile.about|default:"Add an About Me summary from the admin panel."|linebreaksbr }}</p>
       </div>
 
       <div class="about-facts">
         {% if profile.open_to or profile.open_to_note %}
-        <div class="fact-card" data-reveal data-reveal-delay="1">
+        <div class="fact-card">
           <span class="fact-label">Open to</span>
           {% if profile.open_to %}<span class="fact-value">{{ profile.open_to }}</span>{% endif %}
           {% if profile.open_to_note %}<span class="fact-sub">{{ profile.open_to_note }}</span>{% endif %}
@@ -148,14 +148,14 @@
         {% endif %}
 
         {% if profile.location %}
-        <div class="fact-card" data-reveal data-reveal-delay="2">
+        <div class="fact-card">
           <span class="fact-label">Based in</span>
           <span class="fact-value">{{ profile.location }}</span>
         </div>
         {% endif %}
 
         {% if profile.learning_focus_list %}
-        <div class="fact-card" data-reveal data-reveal-delay="3">
+        <div class="fact-card">
           <span class="fact-label">Currently exploring</span>
           <div class="chip-row">
             {% for focus in profile.learning_focus_list %}

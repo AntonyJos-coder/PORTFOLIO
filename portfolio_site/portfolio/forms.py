@@ -70,8 +70,8 @@ class ContactForm(forms.ModelForm):
 
     def clean_message(self):
         message = (self.cleaned_data.get("message") or "").strip()
-        if len(message) < 2:
-            raise forms.ValidationError("Please enter a message.")
+        if len(message) < 10:
+            raise forms.ValidationError("Please write a slightly longer message.")
         if len(message) > 4000:
             raise forms.ValidationError("Message is too long.")
         return message

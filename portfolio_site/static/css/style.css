@@ -1044,35 +1044,16 @@ textarea.field-input { resize: vertical; min-height: 130px; }
 /* =========================================================
    Responsive
    ========================================================= */
-
-/* ---------- 1024px — tablet landscape ---------- */
 @media (max-width: 1024px) {
-  .hero-inner {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .hero-visual {
-    align-items: center;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .photo-stage {
-    width: min(260px, 60vw);
-    padding: 12px;
-    margin: 0 auto;
-  }
+  .hero-inner { grid-template-columns: 1fr; gap: 20px; }
+  .hero-visual { align-items: center; margin: 0 auto; }
+  .photo-stage { width: min(260px, 60vw); padding: 12px; margin: 0 auto; }
   .about-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .featured-project { grid-template-columns: 1fr; }
-  .featured-project-media {
-    min-height: 0;
-    aspect-ratio: 16 / 9;
-  }
-  /* keep projects grid from getting too wide with only 1 item */
-  .projects-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .featured-project-media { min-height: 0; aspect-ratio: 16 / 9; }
 }
 
-/* ---------- 860px — mobile nav breakpoint ---------- */
 @media (max-width: 860px) {
   .main-nav { display: none; }
   .nav-toggle { display: flex; }
@@ -1083,7 +1064,6 @@ textarea.field-input { resize: vertical; min-height: 130px; }
     top: var(--header-h);
     left: 0;
     right: 0;
-    z-index: 99;                    /* sit above page content */
     background: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
     box-shadow: var(--shadow-md);
@@ -1093,196 +1073,24 @@ textarea.field-input { resize: vertical; min-height: 130px; }
     padding: 12px clamp(20px, 6vw, 80px) 20px;
     animation: nav-in .22s var(--ease);
   }
-  .main-nav.open a {
-    width: 100%;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .main-nav.open a:last-child { border-bottom: none; }
+  .main-nav.open a { width: 100%; padding: 12px 0; }
   .main-nav.open a::after { display: none; }
 }
 
-/* ---------- 768px — tablet portrait ---------- */
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: clamp(2rem, 7vw, 3rem);
-  }
-  .typewriter {
-    font-size: clamp(1.4rem, 5.5vw, 2.2rem);
-  }
-  .hero-typewriter-line {
-    height: clamp(2rem, 7vw, 2.8rem);
-  }
-  .skills-groups {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  }
-  .timeline-head {
-    flex-direction: column;
-    gap: 4px;
-  }
-  .timeline-years { white-space: normal; }
-}
-
-/* ---------- 640px — large mobile ---------- */
 @media (max-width: 640px) {
   .form-row { grid-template-columns: 1fr; }
-
-  /* Hero CTA: stack buttons, full width, no overflow */
-  .hero-cta-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-  .hero-cta-row .btn,
-  .hero-cta-row .btn-hire,
-  .hero-cta-row .btn-cv {
-    text-align: center;
-    justify-content: center;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .hero-meta-row {
-    gap: 10px;
-    font-size: 0.88rem;
-  }
+  .hero-cta-row { flex-direction: column; align-items: stretch; gap: 10px; }
+  .hero-cta-row .btn { text-align: center; justify-content: center; width: 100%; }
+  .hero-meta-row { gap: 14px; }
   .hero-social-divider { max-width: 100%; }
-
-  .photo-stage {
-    width: min(200px, 60vw);
-    padding: 8px;
-    margin: 0 auto;
-  }
+  .photo-stage { width: min(200px, 60vw); padding: 8px; margin: 0 auto; }
   .hero-visual { align-items: center; }
-
-  /* hide decorative floating chips — overflow risk on small screens */
   .float-chip { display: none; }
-
-  /* prevent typewriter from causing horizontal scroll */
-  .typewriter {
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
-  }
-  .hero-typewriter-line { overflow: hidden; }
-
-  .featured-project-body { padding: 16px; }
-
-  /* contact form padding */
-  .contact-form { padding: 18px 16px; }
-
-  /* footer stacks */
-  .footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .footer-links { flex-wrap: wrap; gap: 12px; }
-
-  /* projects grid: single column */
-  .projects-grid { grid-template-columns: 1fr; }
-
-  /* section inner padding tighter */
-  .section-inner { padding: 0 clamp(16px, 5vw, 32px); }
+  .typewriter { min-width: 0; }
+  .featured-project-body { padding: 18px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 
-/* ---------- 430px — large phone ---------- */
-@media (max-width: 430px) {
-  .hero-title {
-    font-size: clamp(1.8rem, 8.5vw, 2.5rem);
-    letter-spacing: -0.02em;
-  }
-  .typewriter {
-    font-size: clamp(1.25rem, 6vw, 1.7rem);
-  }
-  .hero-typewriter-line {
-    height: clamp(1.8rem, 8vw, 2.4rem);
-  }
-  .hero-desc-lead { font-size: 0.97rem; }
-  .hero-desc-sub { font-size: 0.92rem; }
-  .hero-meta-row { font-size: 0.84rem; gap: 8px; }
-
-  /* brand in header */
-  .brand-name { font-size: 0.92rem; }
-  .brand-role { font-size: 0.72rem; }
-
-  /* chips wrap nicely */
-  .chip { padding: 6px 12px; font-size: 0.8rem; }
-
-  /* card padding */
-  .project-body { padding: 16px 14px 18px; }
-  .fact-card { padding: 14px 14px; }
-
-  /* timeline */
-  .timeline { margin-left: 2px; }
-  .timeline li { padding-left: 18px; }
-
-  /* section headings */
-  .section h2 {
-    font-size: clamp(1.35rem, 5.5vw, 1.7rem);
-  }
-}
-
-/* ---------- 390px — iPhone 14 Pro ---------- */
-@media (max-width: 390px) {
-  .hero-title { font-size: clamp(1.65rem, 9vw, 2.2rem); }
-  .typewriter { font-size: clamp(1.15rem, 6.5vw, 1.5rem); }
-
-  /* header: reduce gap so brand + toggle don't clash */
-  .header-inner { gap: 12px; padding: 0 16px; }
-
-  /* welcome pill: smaller on tiny screens */
-  .welcome-pill { padding: 6px 14px; }
-  .welcome-text { font-size: 0.8rem; }
-  .welcome-wave { font-size: 1rem; }
-
-  /* skills grid: 2 col on 390 */
-  .skills-groups { grid-template-columns: 1fr 1fr; gap: 10px; }
-}
-
-/* ---------- 375px — iPhone SE / standard ---------- */
-@media (max-width: 375px) {
-  .hero-title { font-size: clamp(1.55rem, 9.5vw, 2rem); }
-  .header-inner { padding: 0 14px; }
-  .section-inner { padding: 0 14px; }
-
-  /* contact form */
-  .contact-form { padding: 14px 12px; }
-
-  /* footer */
-  .footer-links { gap: 10px; font-size: 0.8rem; }
-}
-
-/* ---------- 320px — small Android / iPhone SE 1st gen ---------- */
-@media (max-width: 320px) {
-  :root { --header-h: 60px; }
-
-  .hero-title { font-size: 1.5rem; }
-  .typewriter { font-size: 1.1rem; }
-  .hero-typewriter-line { height: 1.7rem; }
-
-  .header-inner { padding: 0 12px; gap: 8px; }
-  .brand-name { font-size: 0.85rem; }
-  .brand-role { display: none; }          /* too cramped at 320px */
-
-  .section-inner { padding: 0 12px; }
-  .contact-form { padding: 12px 10px; }
-
-  /* skills: single col at 320 */
-  .skills-groups { grid-template-columns: 1fr; }
-
-  /* reduce button padding */
-  .btn { padding: 11px 18px; font-size: 0.88rem; }
-  .btn-sm { padding: 8px 14px; font-size: 0.8rem; }
-
-  /* chip row: tighter */
-  .chip { padding: 5px 10px; font-size: 0.78rem; }
-
-  /* footer copyright: very small */
-  .footer-copyright { font-size: 0.72rem; }
-}
-
-/* ---------- prefers-reduced-motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }

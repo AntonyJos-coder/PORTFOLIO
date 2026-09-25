@@ -1,24 +1,22 @@
 from collections import OrderedDict
 
 from django.conf import settings
-from django.contrib import messages
 from django.core.cache import cache
 from django.core.mail import EmailMessage
-from django.shortcuts import redirect, render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
 from .forms import ContactForm
-from .models import Education, Experience, Profile, Project, Skill
+from .models import Profile, Education, Skill, Experience, Project
 from .page_cache import HOME_CACHE_KEY
 
 CONTACT_RATE_LIMIT = 5
 CONTACT_RATE_WINDOW = 60 * 60
 PAGE_CACHE_TTL = 120
 
-
-# â”€â”€ helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def _client_ip(request):
     return request.META.get("REMOTE_ADDR") or "unknown"
@@ -52,13 +50,13 @@ def _send_contact_notification(form_data):
         return
     subject = (
         f"[Portfolio] New message from {form_data['name']}"
-        + (f" â€” {form_data['subject']}" if form_data.get("subject") else "")
+        + (f" — {form_data['subject']}" if form_data.get("subject") else "")
     )
     body = (
         f"Name:    {form_data['name']}\n"
         f"Email:   {form_data['email']}\n"
-        f"Phone:   {form_data.get('phone') or 'â€”'}\n"
-        f"Subject: {form_data.get('subject') or 'â€”'}\n"
+        f"Phone:   {form_data.get('phone') or '—'}\n"
+        f"Subject: {form_data.get('subject') or '—'}\n"
         f"\n{form_data['message']}\n"
         f"\n---\nReply directly to this email to respond."
     )
@@ -88,10 +86,10 @@ def _page_payload():
     skills = list(Skill.objects.all())
     experience = list(Experience.objects.all())
     projects = list(Project.objects.all())
-    featured_project = next((p for p in projects if p.featured), None)
+    featured_project = next((project for project in projects if project.featured), None)
     other_projects = [
-        p for p in projects
-        if featured_project is None or p.pk != featured_project.pk
+        project for project in projects
+        if featured_project is None or project.pk != featured_project.pk
     ]
 
     payload = {
@@ -105,8 +103,6 @@ def _page_payload():
     cache.set(HOME_CACHE_KEY, payload, PAGE_CACHE_TTL)
     return payload
 
-
-# â”€â”€ views â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @csrf_protect
 @never_cache
