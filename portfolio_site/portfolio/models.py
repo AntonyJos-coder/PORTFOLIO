@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator, RegexValidator
+import os
+import re
 
 IMAGE_EXTENSIONS = FileExtensionValidator(["jpg", "jpeg", "png", "webp"])
 PDF_EXTENSIONS = FileExtensionValidator(["pdf"])
@@ -7,6 +9,21 @@ PDF_EXTENSIONS = FileExtensionValidator(["pdf"])
 
 def csv_list(value):
     return [item.strip() for item in (value or "").split(",") if item.strip()]
+
+
+def _sanitize_filename(filename):
+    """Replace spaces and special chars in filenames with underscores."""
+    name, ext = os.path.splitext(filename)
+    name = re.sub(r'[^\w.-]', '_', name)
+    return name + ext
+
+
+def upload_profile_image(instance, filename):
+    return f"profile/{_sanitize_filename(filename)}"
+
+
+def upload_resume(instance, filename):
+    return f"resume/{_sanitize_filename(filename)}"
 
 
 class Profile(models.Model):
@@ -34,12 +51,12 @@ class Profile(models.Model):
         help_text="Supporting line under “Open to”"
     )
     profile_image = models.ImageField(
-        upload_to="profile/", blank=True, null=True,
+        upload_to=upload_profile_image, blank=True, null=True,
         validators=[IMAGE_EXTENSIONS],
         help_text="Your photo for the hero section. A square image (about 600×600) works best. JPG, PNG or WebP only."
     )
     resume_file = models.FileField(
-        upload_to="resume/", blank=True, null=True,
+        upload_to=upload_resume, blank=True, null=True,
         validators=[PDF_EXTENSIONS],
         help_text="Upload a PDF resume for the Resume button"
     )
@@ -168,7 +185,7 @@ class Project(models.Model):
     summary = models.CharField(max_length=250, help_text="Short one-line summary")
     description = models.TextField(blank=True)
     image = models.ImageField(
-        upload_to="projects/", blank=True, null=True,
+        upload_to=lambda instance, filename: f"projects/{_sanitize_filename(filename)}", blank=True, null=True,
         validators=[IMAGE_EXTENSIONS],
     )
     project_url = models.URLField(blank=True, help_text="Live site / demo link")
