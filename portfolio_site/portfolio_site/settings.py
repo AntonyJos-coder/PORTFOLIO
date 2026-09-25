@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'portfolio.apps.PortfolioConfig',
 ]
 
@@ -181,10 +182,45 @@ MEDIA_ROOT = BASE_DIR / 'media'
 WHITENOISE_MAX_AGE = 31536000
 WHITENOISE_USE_FINDERS = DEBUG
 
+# ── Supabase Storage (S3-compatible) ─────────────────────────────────────────
+# Set SUPABASE_STORAGE_* vars in .env / Render dashboard to enable cloud media.
+# Without them, local FileSystemStorage is used (fine for dev, breaks on Render).
+
+_sb_url        = os.environ.get("SUPABASE_URL", "")           # e.g. https://xxxx.supabase.co
+_sb_key        = os.environ.get("SUPABASE_SERVICE_KEY", "")   # service_role key (not anon key)
+_sb_bucket     = os.environ.get("SUPABASE_BUCKET", "media")   # bucket name you created
+_sb_region     = os.environ.get("SUPABASE_REGION", "ap-southeast-2")  # match your project region
+
+_USE_SUPABASE_STORAGE = bool(_sb_url and _sb_key and _sb_bucket)
+
+if _USE_SUPABASE_STORAGE:
+    # Supabase Storage exposes an S3-compatible endpoint at:
+    # https://<project-ref>.supabase.co/storage/v1/s3
+    _sb_project_ref = _sb_url.replace("https://", "").split(".")[0]
+
+    AWS_ACCESS_KEY_ID       = _sb_project_ref          # Supabase uses project ref as access key
+    AWS_SECRET_ACCESS_KEY   = _sb_key
+    AWS_STORAGE_BUCKET_NAME = _sb_bucket
+    AWS_S3_REGION_NAME      = _sb_region
+    AWS_S3_ENDPOINT_URL     = f"{_sb_url}/storage/v1/s3"
+    AWS_S3_FILE_OVERWRITE   = False                    # keep original filename on re-upload
+    AWS_DEFAULT_ACL         = "public-read"            # files must be public for the portfolio
+    AWS_QUERYSTRING_AUTH    = False                    # serve clean URLs without signed params
+    AWS_S3_CUSTOM_DOMAIN    = None                     # use Supabase CDN URL directly
+
+    # Public URL pattern Supabase uses for objects:
+    # https://<project>.supabase.co/storage/v1/object/public/<bucket>/<path>
+    MEDIA_URL = f"{_sb_url}/storage/v1/object/public/{_sb_bucket}/"
+
 if not DEBUG:
+    _default_storage = (
+        "storages.backends.s3boto3.S3Boto3Storage"
+        if _USE_SUPABASE_STORAGE
+        else "django.core.files.storage.FileSystemStorage"
+    )
     STORAGES = {
         "default": {
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
+            "BACKEND": _default_storage,
         },
         "staticfiles": {
             "BACKEND": (
