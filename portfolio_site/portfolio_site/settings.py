@@ -264,8 +264,8 @@ if _USE_SUPABASE_STORAGE:
                     multipart_chunksize=5 * 1024 * 1024 * 1024,
                     use_threads=False,
                 ),
-                # Disable x-amz-checksum-* headers — added as default in
-                # botocore 1.36. Supabase S3 rejects them on PutObject.
+                # Supabase S3 rejects x-amz-checksum-* headers (botocore>=1.36 default).
+                # Requires boto3>=1.36.0 — set in requirements.txt.
                 "client_config": _BotoConfig(
                     request_checksum_calculation="when_required",
                     response_checksum_validation="when_required",
