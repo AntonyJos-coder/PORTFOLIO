@@ -257,6 +257,7 @@ if _USE_SUPABASE_STORAGE:
                 "addressing_style": "path",
                 "querystring_auth": False,
                 "file_overwrite":   True,
+                "default_acl":      None,            # Supabase S3 rejects ACL headers
                 # Must be a real TransferConfig object, not a dict.
                 # Supabase S3 rejects multipart — force single PutObject.
                 "transfer_config": _TransferConfig(
@@ -364,4 +365,11 @@ LOGGING = {
         "console": {"class": "logging.StreamHandler"},
     },
     "root": {"handlers": ["console"], "level": "INFO"},
+    "loggers": {
+        "botocore": {
+            "handlers": ["console"],
+            "level": "DEBUG" if _USE_SUPABASE_STORAGE else "INFO",
+            "propagate": False,
+        },
+    },
 }
