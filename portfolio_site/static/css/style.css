@@ -1296,6 +1296,7 @@ textarea.field-input { resize: vertical; min-height: 130px; }
    Typography: darken body and muted text for readability
    ========================================================= */
 :root {
-  --color-body: #1F2937;
-  --color-muted: #374151;
+  --color-bg: #F5F5F4;
+  --color-body: #1A202C;
+  --color-muted: #2D3748;
 }
