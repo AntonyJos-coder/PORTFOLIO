@@ -115,7 +115,7 @@
           <span class="float-chip float-chip-4" aria-hidden="true">Flutter</span>
           <div class="identity-card">
             {% if profile.profile_image %}
-              <img src="{{ profile.profile_image.url }}" alt="Portrait of {{ profile.full_name }}" class="identity-photo" width="340" height="340" decoding="async" fetchpriority="high">
+              <img src="{{ profile.profile_image.url }}" alt="Portrait of {{ profile.full_name }}" class="identity-photo" decoding="async" fetchpriority="high">
             {% else %}
               <span class="identity-initials" aria-hidden="true">AJ</span>
             {% endif %}
