@@ -4,22 +4,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}{% if profile %}{{ profile.full_name }} | {{ profile.title }}{% else %}Portfolio{% endif %}{% endblock %}</title>
-<meta name="description" content="{% block description %}{% if profile %}{{ profile.subtitle|default:profile.about|truncatechars:155 }}{% else %}Personal portfolio.{% endif %}{% endblock %}">
+<title>{% block title %}Antony Jos | Computer Engineer Portfolio{% endblock %}</title>
+<meta name="description" content="{% block description %}Portfolio of Antony Jos showcasing projects in web development, application development, Python and data analytics.{% endblock %}">
+<meta name="author" content="Antony Jos">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#111827">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="{% if profile %}{{ profile.full_name }} | {{ profile.title }}{% else %}Portfolio{% endif %}">
-<meta property="og:description" content="{% if profile %}{{ profile.subtitle|default:profile.about|truncatechars:155 }}{% endif %}">
+<meta property="og:title" content="Antony Jos | Computer Engineer Portfolio">
+<meta property="og:description" content="Portfolio of Antony Jos showcasing projects in web development, application development, Python and data analytics.">
 <meta name="twitter:card" content="summary">
 
 <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="preload" href="{% static 'css/style.css' %}?v=5.2" as="style">
-<link rel="stylesheet" href="{% static 'css/style.css' %}?v=5.2">
+<link rel="preload" href="{% static 'css/style.css' %}?v=5.3" as="style">
+<link rel="stylesheet" href="{% static 'css/style.css' %}?v=5.3">
 </head>
 <body>
 {% block content %}{% endblock %}
