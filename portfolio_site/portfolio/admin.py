@@ -1,5 +1,23 @@
 from django.contrib import admin
-from .models import Profile, Education, Skill, Experience, Project, ContactMessage
+
+try:
+    from .models import (
+        Profile,
+        Education,
+        Skill,
+        Experience,
+        Project,
+        ContactMessage,
+    )
+except ImportError:
+    from portfolio.models import (
+        Profile,
+        Education,
+        Skill,
+        Experience,
+        Project,
+        ContactMessage,
+    )
 
 admin.site.site_header = "Antony Jos Portfolio"
 admin.site.site_title = "Portfolio Admin"
