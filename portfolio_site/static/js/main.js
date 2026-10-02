@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var toggle = document.getElementById("navToggle");
   var nav = document.getElementById("mainNav");
   var navLinks = document.querySelectorAll(".main-nav a");
+  var scrollToTopBtn = document.getElementById("scrollToTopBtn");
   var sections = [];
   var ticking = false;
   var typeTimer = 0;
@@ -17,6 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ticking = false;
     if (header) {
       header.classList.toggle("scrolled", window.scrollY > 8);
+    }
+    if (scrollToTopBtn) {
+      scrollToTopBtn.classList.toggle("visible", window.scrollY > 350);
     }
 
     var scrollPos = window.scrollY + 140;
@@ -44,6 +48,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("scroll", requestFrame, { passive: true });
   onFrame();
+
+  if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener("click", function () {
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion ? "auto" : "smooth"
+      });
+    });
+  }
 
   if (toggle && nav) {
     toggle.addEventListener("click", function () {

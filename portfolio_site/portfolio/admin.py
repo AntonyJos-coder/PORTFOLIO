@@ -17,12 +17,12 @@ class ProfileAdmin(FastAdmin):
     fieldsets = (
         ("Identity", {"fields": ("full_name", "title", "tagline", "subtitle", "about", "profile_image")}),
         ("About focus & highlights", {
-            "fields": ("about_focus", "about_approach", "about_currently", "open_to", "open_to_note", "learning_focus"),
-            "description": "These fields power the focus information block in the About section.",
+            "fields": ("about_focus", "about_approach", "about_currently", "location", "open_to", "open_to_note", "learning_focus"),
+            "description": "These fields control the Focus, Approach, Currently, and Based in items in the About section.",
         }),
         ("Resume", {"fields": ("resume_file",)}),
-        ("Contact details", {"fields": ("phone", "email", "location")}),
-        ("Social links", {"fields": ("instagram_url", "facebook_url", "linkedin_url", "github_url")}),
+        ("Contact details", {"fields": ("phone", "email")}),
+        ("Social links", {"fields": ("github_url", "linkedin_url", "facebook_url")}),
         ("Footer", {"fields": ("footer_note",)}),
     )
 
@@ -60,7 +60,7 @@ class ExperienceAdmin(FastAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(FastAdmin):
-    list_display = ("title", "category", "date_range", "project_url", "source_url", "order")
+    list_display = ("title", "category", "date_range", "has_live_demo", "order")
     list_editable = ("order",)
     list_filter = ("category", "featured")
     search_fields = ("title", "category", "summary", "tech_stack")
@@ -68,14 +68,18 @@ class ProjectAdmin(FastAdmin):
         ("Project Details", {
             "fields": ("title", "category", "date_range", "summary", "description", "image")
         }),
-        ("Links", {
-            "fields": ("source_url", "project_url"),
-            "description": "Provide a Live Demo URL to show the Live Demo button. Leave empty if no live demo exists.",
+        ("Live Demo & Code Links", {
+            "fields": ("project_url", "source_url"),
+            "description": "Live Demo: Enter a URL to automatically show the 'Live Demo ↗' button on the project card. Leave blank to hide it. Code Repository: Links to the 'View Code ↗' button.",
         }),
         ("Technologies & Display", {
             "fields": ("tech_stack", "featured", "order")
         }),
     )
+
+    @admin.display(boolean=True, description="Live Demo Active")
+    def has_live_demo(self, obj):
+        return bool(obj.project_url)
 
 
 @admin.register(ContactMessage)

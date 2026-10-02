@@ -1320,6 +1320,7 @@ textarea.field-input { resize: vertical; min-height: 130px; }
   .float-chip { display: none; }
   .typewriter { min-width: 0; }
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .scroll-to-top-btn { bottom: 20px; right: 20px; width: 38px; height: 38px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1338,4 +1339,47 @@ textarea.field-input { resize: vertical; min-height: 130px; }
   --color-bg: #F5F5F4;
   --color-body: #1A202C;
   --color-muted: #2D3748;
+}
+
+/* =========================================================
+   Scroll to Top Button
+   ========================================================= */
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-heading);
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity .25s var(--ease), transform .25s var(--ease), visibility .25s var(--ease), background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+
+.scroll-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #FFFFFF;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.28);
+}
+
+.scroll-to-top-btn:active {
+  transform: translateY(0);
 }
