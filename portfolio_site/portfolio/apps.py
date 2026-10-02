@@ -6,9 +6,5 @@ class PortfolioConfig(AppConfig):
     name = "portfolio"
 
     def ready(self):
-        try:
-            from .signals import connect_cache_signals
-            connect_cache_signals()
-        except ImportError:
-            from portfolio.signals import connect_cache_signals
-            connect_cache_signals()
+        from portfolio.signals import connect_cache_signals
+        connect_cache_signals()
