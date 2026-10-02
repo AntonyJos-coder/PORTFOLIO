@@ -221,7 +221,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = Path("/tmp/media") if IS_VERCEL else (BASE_DIR / 'media')
 
 WHITENOISE_MAX_AGE = 31536000
-WHITENOISE_USE_FINDERS = DEBUG
+WHITENOISE_USE_FINDERS = True
 
 # ── Supabase Storage (S3-compatible) ─────────────────────────────────────────
 # Set these vars in .env / Render dashboard to enable cloud media.
