@@ -26,6 +26,10 @@ def upload_resume(instance, filename):
     return f"resume/{_sanitize_filename(filename)}"
 
 
+def upload_project_image(instance, filename):
+    return f"projects/{_sanitize_filename(filename)}"
+
+
 class Profile(models.Model):
     """Singleton-style model holding the site owner's core info."""
     full_name = models.CharField(max_length=100, default="Antony Jos")
@@ -49,6 +53,21 @@ class Profile(models.Model):
         max_length=200, blank=True,
         default="Web, applications, and data analytics work",
         help_text="Supporting line under “Open to”"
+    )
+    about_focus = models.CharField(
+        max_length=250, blank=True,
+        default="Web & application development, with a growing base in data analytics",
+        help_text="About section: Focus"
+    )
+    about_approach = models.CharField(
+        max_length=250, blank=True,
+        default="Building practical, working tools rather than tutorials",
+        help_text="About section: Approach"
+    )
+    about_currently = models.CharField(
+        max_length=250, blank=True,
+        default="Strengthening SQL, Python and Power BI for analytics roles",
+        help_text="About section: Currently"
     )
     profile_image = models.ImageField(
         upload_to=upload_profile_image, blank=True, null=True,
@@ -130,6 +149,7 @@ class Skill(models.Model):
         ("backend", "Backend"),
         ("database", "Database"),
         ("app", "Application Development"),
+        ("learning", "Currently Learning"),
         ("other", "Other"),
     ]
     name = models.CharField(max_length=60)
@@ -182,14 +202,22 @@ class Experience(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=120)
+    category = models.CharField(
+        max_length=100, blank=True, default="WEB DEVELOPMENT",
+        help_text="e.g. WEB DEVELOPMENT, DATA ANALYTICS, APPLICATION DEVELOPMENT"
+    )
+    date_range = models.CharField(
+        max_length=60, blank=True,
+        help_text="e.g. Oct 2024 – Jan 2025"
+    )
     summary = models.CharField(max_length=250, help_text="Short one-line summary")
     description = models.TextField(blank=True)
     image = models.ImageField(
-        upload_to=lambda instance, filename: f"projects/{_sanitize_filename(filename)}", blank=True, null=True,
+        upload_to=upload_project_image, blank=True, null=True,
         validators=[IMAGE_EXTENSIONS],
     )
-    project_url = models.URLField(blank=True, help_text="Live site / demo link")
-    source_url = models.URLField(blank=True, help_text="Code repository link")
+    project_url = models.URLField(blank=True, verbose_name="Live Demo URL", help_text="Live site / demo link (leave blank if no live demo)")
+    source_url = models.URLField(blank=True, verbose_name="GitHub / View Code URL", help_text="Code repository link")
     tech_stack = models.CharField(max_length=200, blank=True,
                                    help_text="Comma-separated, e.g. Django, HTML, CSS")
     featured = models.BooleanField(default=False)
@@ -205,6 +233,22 @@ class Project(models.Model):
     @property
     def tech_list(self):
         return csv_list(self.tech_stack)
+
+    @property
+    def live_url(self):
+        return self.project_url
+
+    @live_url.setter
+    def live_url(self, value):
+        self.project_url = value
+
+    @property
+    def github_url(self):
+        return self.source_url
+
+    @github_url.setter
+    def github_url(self, value):
+        self.source_url = value
 
 
 class ContactMessage(models.Model):

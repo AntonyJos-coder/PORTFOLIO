@@ -3,6 +3,7 @@ from collections import OrderedDict
 from django.conf import settings
 from django.core.cache import cache
 from django.core.mail import EmailMessage
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
@@ -31,6 +32,17 @@ def _bump_contact_rate(request):
     cache.set(key, cache.get(key, 0) + 1, CONTACT_RATE_WINDOW)
 
 
+CATEGORY_ORDER = {
+    "programming": 1,
+    "web": 2,
+    "backend": 3,
+    "database": 4,
+    "app": 5,
+    "learning": 6,
+    "other": 7,
+}
+
+
 def _group_skills(skills):
     groups = OrderedDict()
     for skill in skills:
@@ -40,7 +52,11 @@ def _group_skills(skills):
             "skills": [],
         })
         group["skills"].append(skill)
-    return list(groups.values())
+    sorted_groups = sorted(
+        groups.values(),
+        key=lambda g: CATEGORY_ORDER.get(g["key"], 99)
+    )
+    return sorted_groups
 
 
 def _send_contact_notification(form_data):
@@ -99,6 +115,7 @@ def _page_payload():
         "experience": experience,
         "featured_project": featured_project,
         "other_projects": other_projects,
+        "projects": projects,
     }
     cache.set(HOME_CACHE_KEY, payload, PAGE_CACHE_TTL)
     return payload
@@ -126,4 +143,11 @@ def home(request):
 
     context = dict(_page_payload())
     context["form"] = form
+
+    projects = context.get("projects") or list(Project.objects.all())
+    paginator = Paginator(projects, 3)
+    page_number = request.GET.get("page", 1)
+    projects_page = paginator.get_page(page_number)
+    context["projects_page"] = projects_page
+    context["paginator"] = paginator
     return render(request, "portfolio/home.html", context)

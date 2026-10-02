@@ -16,9 +16,9 @@ class FastAdmin(admin.ModelAdmin):
 class ProfileAdmin(FastAdmin):
     fieldsets = (
         ("Identity", {"fields": ("full_name", "title", "tagline", "subtitle", "about", "profile_image")}),
-        ("About sidebar", {
-            "fields": ("open_to", "open_to_note", "learning_focus"),
-            "description": "These fields power the “Open to” and “Currently exploring” cards next to About.",
+        ("About focus & highlights", {
+            "fields": ("about_focus", "about_approach", "about_currently", "open_to", "open_to_note", "learning_focus"),
+            "description": "These fields power the focus information block in the About section.",
         }),
         ("Resume", {"fields": ("resume_file",)}),
         ("Contact details", {"fields": ("phone", "email", "location")}),
@@ -60,10 +60,22 @@ class ExperienceAdmin(FastAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(FastAdmin):
-    list_display = ("title", "summary", "featured", "order", "created_at")
-    list_editable = ("featured", "order")
-    list_filter = ("featured",)
-    search_fields = ("title", "summary", "tech_stack")
+    list_display = ("title", "category", "date_range", "project_url", "source_url", "order")
+    list_editable = ("order",)
+    list_filter = ("category", "featured")
+    search_fields = ("title", "category", "summary", "tech_stack")
+    fieldsets = (
+        ("Project Details", {
+            "fields": ("title", "category", "date_range", "summary", "description", "image")
+        }),
+        ("Links", {
+            "fields": ("source_url", "project_url"),
+            "description": "Provide a Live Demo URL to show the Live Demo button. Leave empty if no live demo exists.",
+        }),
+        ("Technologies & Display", {
+            "fields": ("tech_stack", "featured", "order")
+        }),
+    )
 
 
 @admin.register(ContactMessage)
